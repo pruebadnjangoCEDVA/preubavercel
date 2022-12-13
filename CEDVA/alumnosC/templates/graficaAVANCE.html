@@ -1,0 +1,434 @@
+{%extends 'headerAlumno.html'%}
+{%load static%}
+{%block content%}
+<figure class="highcharts-figure">
+
+  <div class="card-group">
+    <div class="card">
+      <div class="card-body">
+       <figure class="highcharts-figure">
+        <div id="container"></div>
+      </figure>
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              VER PAGOS
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <table class="table table-striped"  align="center">
+                <thead style="text-align: center;">
+                 <th class="table-dark">Folio del pago</th>
+                 <td class="table-dark">Monto</td>
+                 <td class="table-dark">Fecha de pago</td>
+                 <td class="table-dark">Mes a pagar </td>
+                 <td class="table-dark">Status </td>
+
+               </thead>
+               <tbody>
+                 {% for context in PAGOS %}
+                 <tbody align="center">
+                  <tr>
+                    <td>{{context.folio}}</td>
+
+                    <td>{{context.monto}}</td>
+                    <td>{{context.fechaPago}}</td>
+                    <td>{{context.mesPagado}}</td>
+                    {% if context.Estado_pago == True %}
+                    <td><i class="fa-solid fa-circle-check" style="color: green;"></i></td>
+                    {%endif%}
+                    {% if context.Estado_pago == False %}
+                    <td><i class="fa-solid fa-circle-xmark" style="color: red;"></i></td>
+                    {%endif%}
+                  </tbody>
+                  {%endfor%}
+                </table>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div class="card"> 
+      <div class="card-body">
+       <figure class="highcharts-figure">
+        <div id="containers"></div>
+      </figure>
+      <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+              VER PAGOS
+            </button>
+          </h2>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+             <table class="table table-striped"  align="center">
+              <thead style="text-align: center;">
+                <th class="table-dark">Folio del pago</th>
+                <td class="table-dark">Monto</td>
+                <td class="table-dark">Fecha de pago</td>
+                <td class="table-dark">Mes a pagar </td>
+                <td class="table-dark">Status </td>
+              </thead>
+              <tbody>
+               {% for context in PAGOSuno %}
+               <tbody align="center">
+                <tr>
+                  <td>{{context.folio}}</td> 
+                  <td>{{context.monto}}</td>
+                  <td>{{context.fechaPago}}</td>
+                  <td>{{context.mesPagado}}</td>
+                  {% if context.Estado_pago == True %}
+                  <td><i class="fa-solid fa-circle-check" style="color: green;"></i></td>
+                  {%endif%}
+                  {% if context.Estado_pago == False %}
+                  <td><i class="fa-solid fa-circle-xmark" style="color: red;"></i></td>
+                  {%endif%}
+                </tbody>
+                {%endfor%}
+              </table>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </div>
+  <div class="card">
+
+    <div class="card-body">
+     <figure class="highcharts-figure">
+      <div id="containerss"></div>
+    </figure>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="flush-headingtree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsetree" aria-expanded="false" aria-controls="flush-collapsetree">
+            VER PAGOS
+          </button>
+        </h2>
+        <div id="flush-collapsetree" class="accordion-collapse collapse" aria-labelledby="flush-headingtree" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <table class="table table-striped"   align="center">
+              <thead style="text-align: center;">
+               <th class="table-dark">Folio del pago</th>
+               <td class="table-dark">Monto</td>
+               <td class="table-dark">Fecha de pago</td>
+               <td class="table-dark">Mes a pagar </td>
+               <td class="table-dark">Status </td>
+
+             </thead>
+             <tbody>
+               {% for context in PAGOSdos %}
+               <tbody align="center">
+                <tr>
+                  <td>{{context.folio}}</td>      
+                  <td>{{context.monto}}</td>
+                  <td>{{context.fechaPago}}</td>
+                  <td>{{context.mesPagado}}</td>
+                  {% if context.Estado_pago == True %}
+                  <td><i class="fa-solid fa-circle-check" style="color: green;"></i></td>
+                  {%endif%}
+                  {% if context.Estado_pago == False %}
+                  <td><i class="fa-solid fa-circle-xmark" style="color: red;"></i></td>
+                  {%endif%}
+                </tbody>
+                {%endfor%}
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="container-rp" class="chart-container"></div>
+
+</figure>
+
+<script type="text/javascript">
+  if ({{report_Alumno|safe}}>0) {
+   Highcharts.chart('container', {
+
+    chart: {
+      type: 'gauge',
+      plotBackgroundColor: null,
+      plotBackgroundImage: null,
+      plotBorderWidth: 0,
+      plotShadow: false,
+      height: '80%'
+    },
+
+    title: {
+      text: 'AVANCE DE PRIMER AÑO'
+    },
+
+    pane: {
+      startAngle: -90,
+      endAngle: 89.9,
+      background: null,
+      center: ['50%', '75%'],
+      size: '110%'
+    },
+
+  // the value axis
+  yAxis: {
+    min: 0,
+    max: 12,
+    tickPixelInterval: 72,
+    tickPosition: 'inside',
+    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
+    tickLength: 20,
+    tickWidth: 2,
+    minorTickInterval: null,
+    labels: {
+      distance: 20,
+      style: {
+        fontSize: '14px'
+      }
+    },
+    plotBands: [{
+      from: 0,
+      to: 5,
+      color: '#55BF3B', // green
+      thickness: 20
+    }, {
+      from: 5,
+      to: 9,
+      color: '#DDDF0D', // yellow
+      thickness: 20
+    }, {
+      from: 9,
+      to: 12,
+      color: '#DF5353', // red
+      thickness: 20
+    }]
+  },
+
+  series: [{
+    name: 'AVANCE',
+    data: {{report_Alumno|safe}},
+    tooltip: {
+      valueSuffix: ' PAGOS'
+    },
+    dataLabels: {
+      format: '{y} REALIZADOS',
+      borderWidth: 0,
+      color: (
+        Highcharts.defaultOptions.title &&
+        Highcharts.defaultOptions.title.style &&
+        Highcharts.defaultOptions.title.style.color
+        ) || '#333333',
+      style: {
+        fontSize: '16px'
+      }
+    },
+    dial: {
+      radius: '80%',
+      backgroundColor: 'gray',
+      baseWidth: 12,
+      baseLength: '0%',
+      rearLength: '0%'
+    },
+    pivot: {
+      backgroundColor: 'gray',
+      radius: 6
+    }
+
+  }]
+
+});}
+
+   if ({{report_Alumno_años|safe}}>0) {
+    Highcharts.chart('containers', {
+
+      chart: {
+        type: 'gauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        height: '80%'
+      },
+
+      title: {
+        text: 'AVANCE DE SEGUNDO AÑO'
+      },
+
+      pane: {
+        startAngle: -90,
+        endAngle: 89.9,
+        background: null,
+        center: ['50%', '75%'],
+        size: '110%'
+      },
+
+  // the value axis
+  yAxis: {
+    min: 0,
+    max: 12,
+    tickPixelInterval: 72,
+    tickPosition: 'inside',
+    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
+    tickLength: 20,
+    tickWidth: 2,
+    minorTickInterval: null,
+    labels: {
+      distance: 20,
+      style: {
+        fontSize: '14px'
+      }
+    },
+    plotBands: [{
+      from: 0,
+      to: 5,
+      color: '#55BF3B', // green
+      thickness: 20
+    }, {
+      from: 5,
+      to: 9,
+      color: '#DDDF0D', // yellow
+      thickness: 20
+    }, {
+      from: 9,
+      to: 12,
+      color: '#DF5353', // red
+      thickness: 20
+    }]
+  },
+
+  series: [{
+    name: 'pagos',
+    data: {{report_Alumno_años|safe}},
+    tooltip: {
+      valueSuffix: ' PAGOS'
+    },
+    dataLabels: {
+      format: '{y} REALIZADOS',
+      borderWidth: 0,
+      color: (
+        Highcharts.defaultOptions.title &&
+        Highcharts.defaultOptions.title.style &&
+        Highcharts.defaultOptions.title.style.color
+        ) || '#333333',
+      style: {
+        fontSize: '16px'
+      }
+    },
+    dial: {
+      radius: '80%',
+      backgroundColor: 'gray',
+      baseWidth: 12,
+      baseLength: '0%',
+      rearLength: '0%'
+    },
+    pivot: {
+      backgroundColor: 'gray',
+      radius: 6
+    }
+
+  }]
+
+});}
+
+    if ({{report_Alumno_añosdos|safe}}>0) {
+      Highcharts.chart('containerss', {
+
+        chart: {
+          type: 'gauge',
+          plotBackgroundColor: null,
+          plotBackgroundImage: null,
+          plotBorderWidth: 0,
+          plotShadow: false,
+          height: '80%'
+        },
+
+        title: {
+          text: 'AVANCES DE TERCER AÑO'
+        },
+
+        pane: {
+          startAngle: -90,
+          endAngle: 89.9,
+          background: null,
+          center: ['50%', '75%'],
+          size: '110%'
+        },
+
+  // the value axis
+  yAxis: {
+    min: 0,
+    max: 12,
+    tickPixelInterval: 72,
+    tickPosition: 'inside',
+    tickColor: Highcharts.defaultOptions.chart.backgroundColor || '#FFFFFF',
+    tickLength: 20,
+    tickWidth: 2,
+    minorTickInterval: null,
+    labels: {
+      distance: 20,
+      style: {
+        fontSize: '14px'
+      }
+    },
+    plotBands: [{
+      from: 0,
+      to: 5,
+      color: '#55BF3B', // green
+      thickness: 20
+    }, {
+      from: 5,
+      to: 9,
+      color: '#DDDF0D', // yellow
+      thickness: 20
+    }, {
+      from: 9,
+      to: 12,
+      color: '#DF5353', // red
+      thickness: 20
+    }]
+  },
+
+  series: [{
+    name: 'PAGOS',
+    data: {{report_Alumno_añosdos|safe}},
+    tooltip: {
+      valueSuffix: ' PAGOS'
+    },
+    dataLabels: {
+      format: '{y} REALIZADOS',
+      borderWidth: 0,
+      color: (
+        Highcharts.defaultOptions.title &&
+        Highcharts.defaultOptions.title.style &&
+        Highcharts.defaultOptions.title.style.color
+        ) || '#333333',
+      style: {
+        fontSize: '16px'
+      }
+    },
+    dial: {
+      radius: '80%',
+      backgroundColor: 'gray',
+      baseWidth: 12,
+      baseLength: '0%',
+      rearLength: '0%'
+    },
+    pivot: {
+      backgroundColor: 'gray',
+      radius: 6
+    }
+
+  }]
+
+});}
+
+
+</script>
+
+{%endblock%}

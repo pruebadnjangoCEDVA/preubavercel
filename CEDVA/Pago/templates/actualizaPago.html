@@ -1,0 +1,54 @@
+{%extends 'director/base.html'%}
+{% load static %}
+{%block content%} 
+<br>
+<div class="jumbotron" align="center">
+	<div class="container">
+		<div class="card shadow-lg p-3 mb-5 bg-body rounded" style="width: 30rem; font-size: 22">
+			<div align="center" class="card-title">
+				<h4>Modificar/Validar el pago</h4>
+			</div>
+			<div class="card-body" align="left">
+				<div class="tab-content" id="nav-tabContent">
+					<form method="POST">
+						{% csrf_token %}
+						{{ form.as_p }}
+						<div align="center">
+							<button type="submit" class="btn btn-warning" onclick="mensaje()">Actualizar</button>
+							<button type="button" onclick="location.href='/{{object.alumno_id}}/pagoalumno'" class="btn btn-secondary"> CANCELAR </button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+<script src="{% static 'js/validarAlumno.js' %}"></script>
+
+
+{% if messages %}
+{% for message in messages %}
+<script>
+
+	Swal.fire({
+		title: "Registro",
+		text: "{{ message }}",
+		icon: 'edit',
+		width: 600,
+		padding: '3em',
+		color: '#000',
+		background: '#fff success',
+		backdrop: `
+		rgba(234, 236, 238, 0.4)
+		url("static/img/engra.gif")
+		left top
+		no-repeat
+		`
+	});
+</script>
+
+{% endfor %}
+{% endif %}
+{% endblock %}

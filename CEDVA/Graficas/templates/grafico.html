@@ -1,0 +1,243 @@
+{%extends 'director/base.html'%}
+{% load static %}
+{% block content %} 
+<figure class="highcharts-figure" >
+ <br>
+ <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+
+  <div class="card-header">
+    <h4 align="center"> Pagos totales</h4>
+  </div>
+  <div> 
+    <form  method = "POST"> 
+      {% csrf_token %}   
+      <div class="card" style="width: 50%;">
+
+        <div class="card-body" align="center">
+          <button><a class="dropdown-item"style="width: 30%;" href="/{{buscarañoan|safe}}/grafico">ANTERIOR</a></button>
+          <button><a class="dropdown-item" style="width: 30%;" href="/{{buscaraño|safe}}/grafico">ACTUAL </a></button>
+          <button><a class="dropdown-item" style="width: 30%;" href="/{{buscarañoSig|safe}}/grafico">SIGUIENTE</a></button>
+        </div>
+      </div>  
+
+    </form> 
+  </div>
+</form>
+<div class="card-body">
+
+  <div id="container"></div>
+</div>
+<div class="card-footer text-muted">
+</div>
+
+</div>
+</figure>
+
+<script type="text/javascript">
+  Highcharts.chart('container', {
+    title: {
+      text: '',
+      align: 'left'
+    },
+    xAxis: {
+      categories: ['Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre']
+    },
+    yAxis: {
+      title: {
+        text: 'Total de Alumnos'
+      }
+    },
+    labels: {
+      items: [{
+        html: 'Alumnos con Convenio y sin Convenio',
+        style: {
+          left: '50px',
+          top: '18px',
+        color: ( // theme
+          Highcharts.defaultOptions.title.style &&
+          Highcharts.defaultOptions.title.style.color
+          ) || 'black'
+      }
+    }]
+  },
+  series: [{
+    type: 'column',
+    showInLegend:true,
+    colorByPoint: true,
+    name: 'Barras',
+    data: {{ report_year_month | safe }}
+  }, {
+    type: 'spline',
+    showInLegend:false,
+    colorByPoint: true,
+    data: {{ report_year_month | safe }},
+    marker: {
+      lineWidth: 2,
+      lineColor: Highcharts.getOptions().colors[3],
+      fillColor: 'white'
+    }
+  },
+  {
+    type: 'pie',
+    name: 'Liter',
+    data: 
+    [{
+      name: 'Alumnos con Convenio',
+      y:{{reportConConvenio | safe }},
+      color: Highcharts.getOptions().colors[0] // 2020 color
+    }, 
+    {
+      name: 'Alumnos sin Convenio',
+      y:{{ reportSinConvenio | safe }},
+      color: Highcharts.getOptions().colors[1] // 2021 color
+    }, 
+    {
+      name: '2022',
+      y: 0,
+      color: Highcharts.getOptions().colors[2] // 2022 color
+    }],
+    center: [80, 70],
+    size: 100,
+    showInLegend: false,
+    dataLabels: {
+      enabled: false
+    }
+  }]
+});
+</script>
+
+
+<figure class="highcharts-figure">
+  <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+  <div id="containerle"></div>
+  </div>
+</figure>
+
+<figure class="highcharts-figure">
+  <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+  <div id="containers"></div>
+  </div>
+</figure>
+
+<script type="text/javascript">
+  // Data retrieved from: https://www.uefa.com/uefachampionsleague/history/
+Highcharts.chart('containers', {
+  chart: {
+    type: 'column'
+  },
+  title: {
+    text: 'Tipos de pagos realizados por los alumnos'
+  },
+  xAxis: {
+   categories: ['Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre']
+
+  },
+  yAxis: {
+    title: {
+      text: 'Cantidad'
+    }
+  },
+  credits: {
+    enabled: false
+  },
+  series: [{
+    name: 'Efectivo',
+    data: {{report_tipo_de_pagos|safe}}
+  }, {
+    name: 'Transferencia',
+    data: {{report_tipo_de_pagos_trans|safe}}
+  }, {
+    name: 'Depósito',
+    data:{{report_tipo_de_pagos_total|safe}}
+  }, {
+    name: 'Mercado Libre',
+    data:{{report_tipo_de_pagos_totales_Mer|safe}}
+  }]
+});
+
+Highcharts.chart('containerle', {
+  title: {
+    text: 'Recaudación monetario por mes'
+  },
+
+  yAxis: {
+    title: {
+      text: 'Pesos MX $'
+    }
+  },
+
+  xAxis: {
+   
+   categories: ['Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'Julio',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre']
+  },
+  legend: {
+    layout: 'vertical',
+    align: 'right',
+    verticalAlign: 'middle'
+  },
+
+  plotOptions: {
+    series: {
+      label: {
+        connectorAllowed: false
+      },
+      pointStart: 0
+    }
+  },
+
+  series: [{
+    name: 'Gráfica monetario',
+    data:  {{report_tipo_de_pagos_totales|safe}}
+  }],
+
+  responsive: {
+    rules: [{
+      condition: {
+        maxWidth: 500
+      },
+      chartOptions: {
+        legend: {
+          layout: 'horizontal',
+          align: 'center',
+          verticalAlign: 'bottom'
+        }
+      }
+    }]
+  }
+});
+</script>
+
+{%endblock%}

@@ -1,0 +1,27 @@
+{%extends 'director/base.html'%}
+{% load static %}
+{% block content %}
+<br><br>
+<div class="container">
+	<div class="shadow-lg p-3 mb-5 bg-body rounded">
+		<div class="card text-center">
+			<div class="card-header">
+				<h4>Eliminar Alumno: Matricula {{ object.matricula }}</h4>
+			</div>
+			<div class="card-body">
+				<form method="POST">
+					<div role="alert">
+						{% csrf_token %} 
+						<p>¿Seguro que desea eliminar: <strong>{{ object.nombreA }} {{ object.apellidoPA }} {{ object.apellidoMA }}</strong>?</p>
+
+						<button id="errorAlert" class="btn btn-danger">Borrar</button>
+					</div>
+				</form>
+			</div>
+			<div class="card-footer text-muted">
+				<button onclick="location.href='/alumnos'" class="btn btn-secondary"> CANCELAR </button>
+			</div>
+		</div>
+	</div>
+</div> 
+{% endblock %}

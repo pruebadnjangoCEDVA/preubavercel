@@ -1,0 +1,70 @@
+{% extends 'inicioA.html'%}
+{%load static%}
+{%block content%}
+{% if user.is_authenticated %}
+<div class="container" align="center">
+  <br>
+  <div class="card">
+    <div class="card-header" style="text-align: left;">
+      Registrar pagos {{Alumno.id}}
+    </div>
+    <div class="shadow-lg p-3 mb-5 bg-body rounded">
+      <div class="card-body">
+        <form method="POST" action="" enctype="multipart/form-data">
+          <div class="form-group col-md-6">
+            {% csrf_token %}
+            <label>Folio</label>
+            <input type="text" name="folio" id="folio" class="form-control">
+            <label>Tipo de Pago</label>
+            <select class="form-select" name="tipoPago" id="tipoPago">
+              <option>Seleccionar opción</option>
+              <option value="Efectivo">Efectivo</option>
+              <option value="Transferencia">Transferencia</option>
+              <option value="Depósito">Depósito</option>
+            </select>
+            <label>Monto</label>
+            <input type="text" name="monto" id="monto" class="form-control">
+            <label>Fecha de Pago</label>
+            <input type="date" name="fechaPago" id="fechaPago" class="form-control" required >
+            <label>Mes a pagar</label>
+            <select class="form-select" name="mesPagado" id="mesPagado">
+              <option value="Enero">Enero</option>
+              <option value="Febrero">Febrero</option>
+              <option value="Marzo">Marzo</option>
+              <option value="Abril">Abril</option>
+              <option value="Mayo">Mayo</option>
+              <option value="Junio">Junio</option>
+              <option value="Julio">Julio</option>
+              <option value="Agosto">Agosto</option>
+              <option value="Septiembre">Septiembre</option>
+              <option value="Octubre">Octubre</option>
+              <option value="Noviembre">Noviembre</option>
+              <option value="Diciembre">Diciembre</option>
+            </select>
+            <label>Hora del Pago</label>
+            <input type="time" name="horapago" id="horapago" class="form-control">
+          </div>
+          <div align="center">
+            <br>
+            <button type="button" onclick="location.href='1inicio'" class="previous action-button btn-secondary" aria-controls="nav-home-tab" >Cancelar</button> 
+            <button type="submit" name="submit" id="submit" class="submit action-button btn-primary" aria-controls="nav-profileD-tab">Aceptar</button> 
+          </div>
+        </div>
+      </div>
+    </form>   
+  </div>
+</div>
+
+
+<script type="text/javascript">
+ var hoy = new Date();
+ var dd = hoy.getDate();
+  if (dd >= 10) {
+    alert(hoy +" Recuerda que si tu pago pasa del día 10 de cada mes pagaras una comisión del 10%")
+  }
+
+
+    </script> 
+{% endif %}
+
+    {%endblock%}

@@ -1,0 +1,38 @@
+{%extends 'director/base.html'%}
+{% load static %}
+{% block content %}
+<br><br>
+<div class="container">
+	<div class="shadow-lg p-3 mb-5 bg-body rounded">
+		<div class="card text-center">
+			<div class="card-header">
+				<h4>Eliminar Pago {{ object.folio }}</h4>
+			</div>
+			<div class="card-body">
+				<form method="POST">
+					<div role="alert">
+						{% csrf_token %} 
+						<p>¿Seguro que desea eliminar: <strong>{{ object.folio}} </strong>?</p>
+
+						<button id="errorAlert" class="btn btn-danger">Borrar</button>
+					</div>
+				</form>
+			</div>
+			<p onclick="cancelarPago()">
+				<button onclick="location.href='{{list_url}}'" class="btn btn-secondary"> CANCELAR </button>
+			</p>
+		</div>
+	</div>
+</div> 
+<script type="text/javascript">
+	function cancelarPago(){
+		Swal.fire({
+			position: 'center',
+			icon: 'error',
+			title: 'Cancelado',
+			showConfirmButton: false,
+			timer: 1500
+		})
+	}
+</script>
+{% endblock %}

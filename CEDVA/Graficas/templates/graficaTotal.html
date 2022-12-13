@@ -1,0 +1,82 @@
+{%extends 'director/base.html'%}
+{% load static %}
+{% block content %} 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+	<div id="container"></div>
+	<p class="highcharts-description">
+		Gráfica de todos los pagos, mensuales, reinscripción, reinscripción anual, modelo educativo certificado y manual
+	</p>
+</figure>
+<script type="text/javascript">
+	Highcharts.chart('container', {
+		title: {
+			text: 'Recaudación monetario por mes'
+		},
+
+		yAxis: {
+			title: {
+				text: 'Pesos MX $'
+			}
+		},
+		xAxis: {
+			categories: ['Enero',
+			'Febrero',
+			'Marzo',
+			'Abril',
+			'Mayo',
+			'Junio',
+			'Julio',
+			'Agosto',
+			'Septiembre',
+			'Octubre',
+			'Noviembre',
+			'Diciembre']
+		},
+		legend: {
+			layout: 'vertical',
+			align: 'right',
+			verticalAlign: 'middle'
+		},
+
+		plotOptions: {
+			series: {
+				label: {
+					connectorAllowed: false
+				},
+				pointStart: 0
+			}
+		},
+
+		series: [{
+			name: 'Todos los pagos',
+			data:  {{todo|safe}}
+		},{
+			name: 'Recaudación monetario',
+			data:  {{todo_pagos|safe}}
+		}],
+
+		responsive: {
+			rules: [{
+				condition: {
+					maxWidth: 500
+				},
+				chartOptions: {
+					legend: {
+						layout: 'horizontal',
+						align: 'center',
+						verticalAlign: 'bottom'
+					}
+				}
+			}]
+		}
+
+	});
+</script>
+
+{%endblock%}
